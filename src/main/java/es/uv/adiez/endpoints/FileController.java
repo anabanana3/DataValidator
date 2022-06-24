@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -37,10 +38,9 @@ public class FileController {
 	}
 	
 	@GetMapping("/prepare/{id}")
-	public ResponseEntity prepareFile(@PathVariable("id") String id) {
+	public ResponseEntity prepareFile(@PathVariable("id") String id, @RequestParam(value="error", defaultValue = "false") Boolean error) {
 		
-		fs.prepareFile(id);
-		return new ResponseEntity<>("Preparing file", HttpStatus.OK);
+		fs.prepareFile(id, error);
+		return new ResponseEntity<>("Preparing file " + id, HttpStatus.OK);
 	}
-	
 }

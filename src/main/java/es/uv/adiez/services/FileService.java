@@ -120,10 +120,11 @@ public class FileService {
 	   return new File();
 	}
 	
-	public void prepareFile(String id) {
+	public void prepareFile(String id, Boolean error) {
 		File f = findById(id);
 		//Actualizamos el estado
 		updateStatus(f, File.Status.preparing);
+		if(error) f.setStatus(File.Status.error);
 		//enviamos el fichero a rabbit
 		rabbit.sendData(gson.toJson(f, File.class));
 	}
